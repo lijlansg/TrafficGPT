@@ -3,7 +3,7 @@ import re
 import yaml
 from rich import print
 # from langchain import OpenAI
-from langchain.chat_models import AzureChatOpenAI
+from langchain.chat_models import AzureChatOpenAI, ChatOpenAI
 
 from LLMAgent.ConversationBot import ConversationBot
 
@@ -22,15 +22,25 @@ openai.api_requestor.TIMEOUT_SECS = 30
 # --ZH 初始化 LLM
 # --EN Initialize a LLM
 OPENAI_CONFIG = yaml.load(open('config.yaml'), Loader=yaml.FullLoader)
-os.environ["OPENAI_API_TYPE"] = OPENAI_CONFIG['OPENAI_API_TYPE']
-os.environ["OPENAI_API_VERSION"] = OPENAI_CONFIG['OPENAI_API_VERSION']
-os.environ["OPENAI_API_BASE"] = OPENAI_CONFIG['OPENAI_API_BASE']
-os.environ["OPENAI_API_KEY"] = OPENAI_CONFIG['OPENAI_API_KEY']
-
-llm = AzureChatOpenAI(
-    deployment_name="Test-trans-01",
-    temperature=0.9,
-)
+if OPENAI_CONFIG['OPENAI_API_TYPE'] == 'azure':
+    os.environ["OPENAI_API_TYPE"] = OPENAI_CONFIG['OPENAI_API_TYPE']
+    os.environ["OPENAI_API_VERSION"] = OPENAI_CONFIG['AZURE_API_VERSION']
+    os.environ["OPENAI_API_BASE"] = OPENAI_CONFIG['AZURE_API_BASE']
+    os.environ["OPENAI_API_KEY"] = OPENAI_CONFIG['AZURE_API_KEY']
+    llm = AzureChatOpenAI(
+        deployment_name=OPENAI_CONFIG['AZURE_MODEL'],
+        temperature=0,
+        max_tokens=1024,
+        request_timeout=60
+    )
+elif OPENAI_CONFIG['OPENAI_API_TYPE'] == 'openai':
+    os.environ["OPENAI_API_KEY"] = OPENAI_CONFIG['OPENAI_KEY']
+    llm = ChatOpenAI(
+        temperature=0,
+        model_name='gpt-3.5-turbo-16k-0613',  # or any other model with 8k+ context
+        max_tokens=1024,
+        request_timeout=60
+    )
 
 # ------------------------------------------------------------------------------
 # --ZH 初始化工具
