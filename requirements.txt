@@ -1,0 +1,12 @@
+geopandas==0.13.2
+gradio==3.44.2
+langchain==0.0.288
+matplotlib==3.7.2
+openai==0.27.8
+pandas==2.0.2
+PyYAML==6.0
+PyYAML==6.0.1
+rich==13.5.2
+SQLAlchemy==2.0.16
+sumolib==1.18.0
+traci==1.18.0
