@@ -157,7 +157,15 @@ python ./DataProcessBot.py
 
 ## Demo 
 
-### Simple command multi-round dialogue
+### Simple Commands Multi-round dialogue
 
 https://github.com/lijlansg/TrafficGPT/assets/26219929/c8765850-1e16-41e5-bf2b-de558a6acb12
+
+### Fuzzy Instructions and Human Intervention
+
+https://github.com/lijlansg/TrafficGPT/assets/26219929/ac017333-0683-4128-a25c-3b8bee5df786
+
+### Insightfull Assitance
+
+https://github.com/lijlansg/TrafficGPT/assets/26219929/feba9e3d-0fc2-4bae-9763-224f817e772f
 

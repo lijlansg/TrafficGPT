@@ -1,21 +1,24 @@
 # TrafficGPT
 
+![![Static Badge](https://img.shields.io/badge/Readme-Chinese-red)
+](https://github.com/lijlansg/TrafficGPT/blob/main/readme.zh.md)
+
 ## Installation
 
-TrafficGPT 无需安装，可以选择直接将代码 clone 到本地运行。
+TrafficGPT does not require installation, you should just clone the code and run locally.
 
 ```Powershell
 clone https://github.com/lijlansg/TrafficGPT.git
 cd TrafficGPT
 ```
 
-TrafficGPT 的运行需要如下的软件支持：
+The operation of TrafficGPT requires the following software support:
 
 - Python
 - [SUMO](https://sumo.dlr.de/docs/Downloads.php)
 - [PostgreSQL](https://www.postgresql.org/download/)
 
-同时，请安装所需第三方库：
+At the same time, please install the required third-party libraries:
 
 ```Powershell
 pip install -r requirements
@@ -25,7 +28,7 @@ pip install -r requirements
 
 ### LLM Configuration
 
-首先，需要配置 OpenAI-Key，请在根目录下创建 `./config.yaml` 文件，并将下面的内容添加到该文件中（请将其中的内容修改为你自己的设置）：
+First, you need to configure OpenAI-Key. Please create a `./config.yaml` file in the root directory and add the following content to the file (please modify the content to your own settings):
 
 ```yaml
 OPENAI_API_TYPE: 'azure' #'azure'  OR 'openai'
@@ -38,7 +41,7 @@ AZURE_API_KEY: 'xxxxxx' # your deployment key
 AZURE_API_VERSION: '2023-03-15-preview'
 ```
 
-这里我们推荐使用 ChatGPT-3.5 作为 LLM 运行，如果你要使用自己的 LLM，请参考 [LangChain-Large Language Models](https://python.langchain.com/docs/modules/model_io/models/) 来定义你自己的 LLM。在这种情况下，请修改 `./DataProcessBot.py` 和 `./SimulationProcessBot.py` 中的如下部分，来配置你自己的 LLM。
+Here we recommend using ChatGPT-3.5 to run as LLM. If you want to use your own LLM, please refer to [LangChain-Large Language Models](https://python.langchain.com/docs/modules/model_io/models/) to define Your own LLM. In this case, please modify the following sections in `./DataProcessBot.py` and `./SimulationProcessBot.py` to configure your own LLM.
 
 ```Python
 OPENAI_CONFIG = yaml.load(open('config.yaml'), Loader=yaml.FullLoader)
@@ -63,7 +66,7 @@ elif OPENAI_CONFIG['OPENAI_API_TYPE'] == 'openai':
     )
 ```
 
-至此，你可以运行 `./SimulationProcessBot.py` 了。
+Fine, now, you can run `./SimulationProcessBot.py`.
 
 ```Powershel
 python ./SimulationProcessBot.py
@@ -71,13 +74,13 @@ python ./SimulationProcessBot.py
 
 ### Database Configuration
 
-然后，为了运行 `./DataProcessBot.py`，我们需要配置数据库。在此之前，请参考 [Github:OpenITS-PG-SUMO
-](https://github.com/Fdarco/OpenITS-PG-SUMO) 将数据导入到 PostgreSQL 数据库中。
+Then, in order to run `./DataProcessBot.py`, we need to configure the database. Until then, please refer to [Github:OpenITS-PG-SUMO
+](https://github.com/Fdarco/OpenITS-PG-SUMO) Import data into a PostgreSQL database.
 
-之后，你的数据库应该包含以下四个表：`topo_centerroad` ,`spatial_ref_sys` , `zone_roads` , `the_synthetic_individual_level_trip_dataset`。
-为了简化实时查询操作，还需要按照以下查询顺序创建2个新表：`road_level_trip_dataset` 和 `road_volume_per_hour`。
+Afterwards, your database should contain the following four data tables: `topo_centerroad`, `spatial_ref_sys`, `zone_roads`, `the_synthetic_individual_level_trip_dataset`.
+In order to simplify the real-time query operation, two new tables need to be created in the following query sequence: `road_level_trip_dataset` and `road_volume_per_hour`.
 
-1. 建立`road_level_trip_dataset`：
+1. Create `road_level_trip_dataset`：
 ```sql
 CREATE TABLE road_level_trip_dataset (
   trip_id INT,
@@ -121,7 +124,7 @@ FROM
     SELECT * FROM split_paths
   ) AS split_data;
 ```
-2. 建立`road_volume_per_hour`
+2. Create `road_volume_per_hour`
 ```sql
 CREATE TABLE road_volume_per_hour (
   hour_start TIMESTAMP,
@@ -139,7 +142,7 @@ GROUP BY hour_start, road
 ORDER BY hour_start, road;
 ```
 
-在所有数据表创建完成后，请在根目录下创建 `./dbconfig.yaml` 文件，并将如下内容写入文件中：
+After all data tables are created, please create a `./dbconfig.yaml` file in the root directory and write the following content into the file:
 
 ```yaml
 username: your_user_name
@@ -149,7 +152,7 @@ port: 5432
 db_name: OPENITS
 ```
 
-至此，你可以运行 `./DataProcessBot.py` 了。
+Fine, now, you can run `./DataProcessBot.py`.
 
 ```Powershell
 python ./DataProcessBot.py
