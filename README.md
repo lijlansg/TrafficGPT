@@ -92,3 +92,7 @@ python ./DataProcessBot.py
 
 ## Demo 
 
+### Simple command multi-round dialogue
+
+https://github.com/lijlansg/TrafficGPT/assets/26219929/c8765850-1e16-41e5-bf2b-de558a6acb12
+
