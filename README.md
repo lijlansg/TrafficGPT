@@ -159,6 +159,11 @@ python ./DataProcessBot.py
 
 ### Simple Commands Multi-round dialogue
 
+### Fuzzy instruction and Human Intervention
+
+### Insightful Decision-making Assistance
+
+
 https://github.com/lijlansg/TrafficGPT/assets/26219929/c8765850-1e16-41e5-bf2b-de558a6acb12
 
 ### Fuzzy Instructions and Human Intervention
