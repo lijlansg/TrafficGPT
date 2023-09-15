@@ -173,3 +173,6 @@ https://github.com/lijlansg/TrafficGPT/assets/26219929/ac017333-0683-4128-a25c-3
 
 https://github.com/lijlansg/TrafficGPT/assets/26219929/feba9e3d-0fc2-4bae-9763-224f817e772f
 
+# Contact 
+
+If you have any questions or suggestions about this project, please send me an Issue and PR, or contact us by email: siyaozhang@buaa.edu.cn
