@@ -89,7 +89,70 @@ db_name: OPENITS
 ```Powershell
 python ./DataProcessBot.py
 ```
+之后，你的数据库应该包含以下四个表：`topo_centerroad` ,`spatial_ref_sys` , `zone_roads` , `the_synthetic_individual_level_trip_dataset`。
+为了简化实时查询操作，还需要按照以下查询顺序创建2个新表：`road_level_trip_dataset` 和 `road_volume_per_hour`。
 
+1. 建立`road_level_trip_dataset`：
+```sql
+CREATE TABLE road_level_trip_dataset (
+  trip_id INT,
+  traveller_id VARCHAR(50),
+  traveller_type VARCHAR(50),
+  departure_time TIMESTAMP,
+  time_slot VARCHAR(50),
+  o_zone VARCHAR(50),
+  d_zone VARCHAR(50),
+  path VARCHAR(50),
+  duration FLOAT
+);
+
+INSERT INTO road_level_trip_dataset
+SELECT
+  trip_id,
+  traveller_id,
+  traveller_type,
+  departure_time,
+  time_slot,
+  o_zone,
+  d_zone,
+  path::VARCHAR, 
+  duration
+FROM
+  (
+    WITH split_paths AS (
+      SELECT
+        trip_id,
+        traveller_id,
+        traveller_type,
+        departure_time,
+        time_slot,
+        o_zone,
+        d_zone,
+        unnest(string_to_array(path, '-')) AS path,
+        duration
+      FROM
+        the_synthetic_individual_level_trip_dataset
+    )
+    SELECT * FROM split_paths
+  ) AS split_data;
+```
+2. 建立`road_volume_per_hour`
+```sql
+CREATE TABLE road_volume_per_hour (
+  hour_start TIMESTAMP,
+  road VARCHAR(50),
+  road_count INT
+);
+
+INSERT INTO road_volume_per_hour
+SELECT
+  DATE_TRUNC('hour', departure_time) AS hour_start,
+  path AS road, 
+  COUNT(*) AS road_count
+FROM road_level_trip_dataset
+GROUP BY hour_start, road
+ORDER BY hour_start, road;
+```
 ## Demo 
 
 ### Simple command multi-round dialogue
