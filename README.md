@@ -74,21 +74,6 @@ python ./SimulationProcessBot.py
 然后，为了运行 `./DataProcessBot.py`，我们需要配置数据库。在此之前，请参考 [Github:OpenITS-PG-SUMO
 ](https://github.com/Fdarco/OpenITS-PG-SUMO) 将数据导入到 PostgreSQL 数据库中。
 
-然后，请在根目录下创建 `./dbconfig.yaml` 文件，并将如下内容写入文件中：
-
-```yaml
-username: your_user_name
-password: your_password
-host: localhost
-port: 5432
-db_name: OPENITS
-```
-
-至此，你可以运行 `./DataProcessBot.py` 了。
-
-```Powershell
-python ./DataProcessBot.py
-```
 之后，你的数据库应该包含以下四个表：`topo_centerroad` ,`spatial_ref_sys` , `zone_roads` , `the_synthetic_individual_level_trip_dataset`。
 为了简化实时查询操作，还需要按照以下查询顺序创建2个新表：`road_level_trip_dataset` 和 `road_volume_per_hour`。
 
@@ -153,6 +138,23 @@ FROM road_level_trip_dataset
 GROUP BY hour_start, road
 ORDER BY hour_start, road;
 ```
+
+在所有数据表创建完成后，请在根目录下创建 `./dbconfig.yaml` 文件，并将如下内容写入文件中：
+
+```yaml
+username: your_user_name
+password: your_password
+host: localhost
+port: 5432
+db_name: OPENITS
+```
+
+至此，你可以运行 `./DataProcessBot.py` 了。
+
+```Powershell
+python ./DataProcessBot.py
+```
+
 ## Demo 
 
 ### Simple command multi-round dialogue
