@@ -2,7 +2,7 @@
 
 [![Static Badge](https://img.shields.io/badge/Readme-English-blue)
 ](https://github.com/lijlansg/TrafficGPT/tree/main)[![Static Badge](https://img.shields.io/badge/Readme-Chinese-red)
-](https://github.com/lijlansg/TrafficGPT/blob/main/readme.zh.md)
+](https://github.com/lijlansg/TrafficGPT/blob/main/readme.zh.md) [![Static Badge](https://img.shields.io/badge/Paper-Arxiv-red)](https://arxiv.org/abs/2309.06719)
 
 ## Installation
 
